@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xlcxx.plodes.busylogic.work.dao.TgWorkWeekMapper">
+  <resultMap id="BaseResultMap" type="com.xlcxx.plodes.busylogic.work.domian.TgWorkWeek">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ww_uuid" jdbcType="VARCHAR" property="wwUuid" />
+    <result column="ww_dept_uuid" jdbcType="VARCHAR" property="wwDeptUuid" />
+    <result column="ww_work_time" jdbcType="VARCHAR" property="wwWorkTime" />
+    <result column="ww_dutyer" jdbcType="VARCHAR" property="wwDutyer" />
+    <result column="ww_endtime" jdbcType="DATE" property="wwEndtime" />
+    <result column="ww_rl_status" jdbcType="CHAR" property="wwRlStatus" />
+    <result column="ww_status" jdbcType="CHAR" property="wwStatus" />
+    <result column="ww_iskao" jdbcType="VARCHAR" property="wwIskao" />
+    <result column="ww_creator" jdbcType="VARCHAR" property="wwCreator" />
+    <result column="ww_creatime" jdbcType="TIMESTAMP" property="wwCreatime" />
+    <result column="ww_version" jdbcType="VARCHAR" property="wwVersion" />
+    <result column="ww_json" jdbcType="LONGVARCHAR" property="wwJson" />
+    <result column="ww_content" jdbcType="LONGVARCHAR" property="wwContent" />
+    <result column="ww_startant" jdbcType="LONGVARCHAR" property="wwStartant" />
+    <result column="ww_picontent" jdbcType="LONGVARCHAR" property="wwPicontent" />
+  </resultMap>
+
+  <insert id="addIndicatPublic" parameterType="com.xlcxx.plodes.busylogic.work.domian.TgWorkWeek">
+    insert into tg_work_week
+    (ww_uuid,ww_dept_uuid,ww_work_time,ww_dutyer,ww_endtime,ww_rl_status,ww_status,ww_iskao,ww_creator,ww_creatime,ww_version,ww_json,
+    ww_content,ww_startant,ww_picontent)
+    values
+    <foreach collection ="list" item="tpp" index= "index" separator =",">
+      (#{tpp.wwUuid},#{tpp.wwDeptUuid},#{tpp.wwWorkTime},#{tpp.wwDutyer},#{tpp.wwEndtime},#{tpp.wwRlStatus},#{tpp.wwStatus},#{tpp.wwIskao},
+      #{tpp.wwCreator},#{tpp.wwCreatime},#{tpp.wwVersion},#{tpp.wwJson},#{tpp.wwContent},#{tpp.wwStartant},#{tpp.wwPicontent})
+    </foreach>
+  </insert>
+
+
+</mapper>

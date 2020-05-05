@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xlcxx.plodes.system.dao.StationMapper">
+  <resultMap id="BaseResultMap" type="com.xlcxx.plodes.system.domain.Station">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ts_id" jdbcType="INTEGER" property="tsId" />
+    <result column="ts_name" jdbcType="VARCHAR" property="tsName" />
+    <result column="ts_pid" jdbcType="INTEGER" property="tsPid" />
+    <result column="ts_status" jdbcType="CHAR" property="tsStatus" />
+    <result column="ts_time" jdbcType="TIMESTAMP" property="tsTime" />
+  </resultMap>
+</mapper>

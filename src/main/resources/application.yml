@@ -1,0 +1,63 @@
+server:
+  port: 8848
+  servlet:
+    context-path: /plodes
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.8.204:3308/godly?useUnicode=true&characterEncoding=utf8&useSSL=true&&allowMultiQueries=true&serverTimezone=UTC
+    username: root
+    password : 123456
+    initialSize: 10
+    minIdle: 20
+    maxActive: 1000
+    maxWait : 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis : 30000
+    validationQuery : SELECT 1 FROM DUAL
+    testWhileIdle : false
+    testOnBorrow : false
+    testOnReturn : false
+    poolPreparedStatements : true
+    maxPoolPreparedStatementPerConnectionSize : 20
+    filters: stat,wall
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  cache:
+    type: redis
+  redis:
+    host: 192.168.8.204
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 1000
+        max-idle: 8
+        max-wait: 1000
+    timeout: 30000
+    database: 2
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+logging:
+  config: classpath:log4j2.xml
+  file:
+    max-history: 7
+mybatis:
+  mapper-locations : classpath:mapper/basicMapper/*.xml,mapper/logicMapper/*.xml
+  configuration:
+    jdbc-type-for-null: null
+mapper:
+  mappers: com.xlcxx.config.MyMapper
+  not-empty: false
+  identity: mysql
+pagehelper:
+  helper-dialect: MariaDB
+  reasonable: true
+  support-methods-arguments: true
+  params:
+    count : countSql
+xlcxx:
+  #是否在console 数据 sql执行语句
+  showsql: true
+

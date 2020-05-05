@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xlcxx.plodes.system.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.xlcxx.plodes.system.domain.MyUser">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+      <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+    <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
+    <result column="status" jdbcType="CHAR" property="status" />
+      <result column="station" jdbcType="VARCHAR" property="station"></result>
+      <result column="deptName" property="deptName"></result>
+      <result column="quit_reason" property="quitReason"></result>
+
+  </resultMap>
+
+    <insert id="addUsersBatch" parameterType="list">
+        INSERT INTO t_user (user_id,username,nickname,status,dept_id)
+        VALUES
+        <foreach collection="users" item="user" separator=",">
+            (#{user.userId},#{user.username},#{user.nickname},#{user.status},#{user.deptId})
+        </foreach>
+    </insert>
+
+  <select id="findUserWithDept" resultType="com.xlcxx.plodes.system.domain.MyUser" parameterType="com.xlcxx.plodes.system.domain.MyUser">
+  		select u.user_id userId,u.username,u.nickname,u.status,u.dept_id as deptId,d.dept_name as deptName
+  		 from t_user u left join t_dept d on u.dept_id = d.dept_id where 1=1
+  		<if test="username != null and username != ''">
+        	AND u.username = #{username}
+	    </if>
+	    <if test="status != null and status != ''">
+	        AND u.status = #{status}
+	    </if>
+  		order by u.user_id
+  </select>
+
+  <select id="findUserWithRole" resultType="com.xlcxx.plodes.system.domain.UserWithRole">
+		select u.user_id userId,u.username,u.nickname,u.dept_id deptId,u.status,ur.role_id roleId from t_user u
+		left join t_user_role ur on (u.user_id = ur.user_id)
+		where u.user_id = #{userId}
+  </select>
+    <!--根据role 查找人员-->
+    <select id="findUserWithRoleId" resultType="com.xlcxx.plodes.system.domain.MyUser">
+       select u.user_id userId,u.username,u.nickname,u.dept_id as deptId,td.dept_name as deptName from t_user u
+        left join t_user_role ur on (u.user_id = ur.user_id)
+        left join t_dept td ON (u.dept_id=td.dept_id)
+       where ur.ROLE_ID = #{roleId}
+    </select>
+
+    <!--根据岗位查询用户的详情-->
+    <select id="selectUser2StationDept" parameterType="string" resultType="com.xlcxx.plodes.system.domain.MyUser">
+        SELECT  u.user_id userId,u.username,u.nickname,u.dept_id as deptId,t_dept.dept_name as deptName
+         FROM t_user as u LEFT JOIN t_dept ON(u.dept_id=t_dept.dept_id) WHERE u.station=#{station}
+    </select>
+    <!--修改离职原因-->
+    <update id="updateByQuitReason">
+       UPDATE t_user set quit_reason =  #{quitReason} where user_id  in
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+
+</mapper>

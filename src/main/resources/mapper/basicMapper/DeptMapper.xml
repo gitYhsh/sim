@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xlcxx.plodes.system.dao.DeptMapper">
+  <resultMap id="BaseResultMap" type="com.xlcxx.plodes.system.domain.Dept">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="dept_id" jdbcType="BIGINT" property="deptId" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+    <result column="dept_status" jdbcType="VARCHAR" property="deptStatus" />
+    <result column="dept_type" jdbcType="VARCHAR" property="deptType" />
+    <result column="dept_del" jdbcType="VARCHAR" property="deptDel" />
+    <result column="dept_director" jdbcType="VARCHAR" property="deptDirector" />
+    <result column="dept_creattime" jdbcType="TIMESTAMP" property="deptCreattime" />
+  </resultMap>
+
+  <!--更新部门显示状态-->
+  <update id="setDingDeptShow" parameterType="string">
+    update  t_dept set dept_type=#{deptType} where dept_did=#{deptDid}
+  </update>
+</mapper>

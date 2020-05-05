@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xlcxx.plodes.system.dao.UserWithDeptMapper">
+  <resultMap id="BaseResultMap" type="com.xlcxx.plodes.system.domain.UserWithDept">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="deptid" jdbcType="VARCHAR" property="deptid" />
+    <result column="deptName" jdbcType="VARCHAR" property="deptName"/>
+  </resultMap>
+
+  <select id="getUserWithDept" parameterType="string" resultMap="BaseResultMap">
+    select t_user.user_id,t_dept.dept_name as deptName,t_user_dept.deptid,t_user_dept.role_id   FROM t_user_dept
+   LEFT JOIN t_user ON t_user_dept.user_id = t_user.username
+    LEFT JOIN t_dept ON t_user_dept.deptid = t_dept.dept_id WHERE t_user_dept.role_id=#{roleId} AND t_user_dept.user_id=#{userid}
+  </select>
+</mapper>

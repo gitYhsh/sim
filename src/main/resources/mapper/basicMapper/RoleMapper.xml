@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xlcxx.plodes.system.dao.RoleMapper">
+  <resultMap id="roleMap" type="com.xlcxx.plodes.system.domain.Role">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="ROLE_ID" jdbcType="DECIMAL" property="roleId" />
+    <result column="ROLE_NAME" jdbcType="VARCHAR" property="roleName" />
+    <result column="ROLE_TYPE" jdbcType="VARCHAR" property="roleType" />
+  </resultMap>
+  
+  <select id="findUserRole" resultMap="roleMap">
+  	select r.* from t_role r 
+  	left join t_user_role ur on(r.role_id = ur.role_id)
+	left join t_user u on(u.user_id = ur.user_id) 
+	where u.username = #{userName}
+  </select>
+  
+  <select id="findById" resultType="com.xlcxx.plodes.system.domain.RoleWithMenu">
+  	select r.role_id roleId,r.role_name roleName,r.role_type,
+  	rm.menu_id menuId from t_role r
+	left join t_role_menu rm on(r.role_id = rm.role_id)
+	where r.role_id = #{roleId}
+  </select>
+
+    <!--获取角色下的人员-->
+    <select id="getDefaultRoleUser" resultType="com.xlcxx.plodes.system.domain.MyUser" parameterType="string">
+        select t_user.* from  t_user_role
+        LEFT JOIN t_user  ON t_user_role.USER_ID = t_user.user_id  WHERE t_user_role.ROLE_ID=#{roleId}
+    </select>
+
+
+    <!--查询用户userName-->
+    <select id="selectUserRoleByUsername" resultMap="roleMap">
+    select t_role.* from t_role
+      left join t_user_role on t_role.role_id=t_user_role.role_id
+    where t_user_role.user_id=#{username}
+  </select>
+</mapper>
